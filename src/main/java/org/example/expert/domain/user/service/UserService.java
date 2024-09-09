@@ -23,11 +23,15 @@ public class UserService {
         return new UserResponse(user.getId(), user.getEmail());
     }
 
+    boolean validPassword(String password) {
+        return password.length() < 8 ||
+                !password.matches(".*\\d.*") ||
+                !password.matches(".*[A-Z].*");
+    }
+
     @Transactional
     public void changePassword(long userId, UserChangePasswordRequest userChangePasswordRequest) {
-        if (userChangePasswordRequest.getNewPassword().length() < 8 ||
-                !userChangePasswordRequest.getNewPassword().matches(".*\\d.*") ||
-                !userChangePasswordRequest.getNewPassword().matches(".*[A-Z].*")) {
+        if (validPassword(userChangePasswordRequest.getNewPassword())) {
             throw new InvalidRequestException("새 비밀번호는 8자 이상이어야 하고, 숫자와 대문자를 포함해야 합니다.");
         }
 
