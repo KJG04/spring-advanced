@@ -32,8 +32,10 @@ class CommentServiceTest {
 
     @Mock
     private CommentRepository commentRepository;
+
     @Mock
     private TodoRepository todoRepository;
+
     @InjectMocks
     private CommentService commentService;
 
